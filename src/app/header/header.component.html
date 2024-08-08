@@ -1,0 +1,10 @@
+<button 
+    class="logo"
+    [routerLink]="'home'"
+    [routerLinkActive]="['activated']"
+>Logo</button>
+<button 
+    class="user-control" 
+    [routerLink]="'login'" 
+    [routerLinkActive]="['activated']"
+>{{isLogin ? 'Logout' : 'Login'}}</button>

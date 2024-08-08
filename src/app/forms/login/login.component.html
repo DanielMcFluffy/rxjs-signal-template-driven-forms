@@ -1,0 +1,39 @@
+<form
+#f="ngForm">
+    <div class="username">
+        <label for="username">Username</label>
+        <input
+            ngModel
+            #usernameInput="ngModel"
+            placeholder="JohnDoe" 
+            type="text"
+            id="username"
+            name="username"
+            required>
+            @if (usernameInput.touched && validation()?.error?.format()?.username; as usernameValidation) {
+                <div>
+                    {{usernameValidation._errors[0]}}
+                </div>
+            }
+    </div>
+    <div class="password">
+        <label for="password">Password</label>
+        <input
+            ngModel 
+            #passwordInput="ngModel"
+            placeholder="password123"
+            type="password" 
+            id="password" 
+            name="password" 
+            required>
+            @if (passwordInput.touched && validation()?.error?.format()?.password; as passwordValidation) {
+                <div>
+                    {{passwordValidation._errors[0]}}
+                </div>
+            }
+    </div>
+    <div class="buttons">
+        <button type="submit" (click)="login()">Login</button>
+        <button type="button" (click)="clear()">Clear</button>
+    </div>
+</form>

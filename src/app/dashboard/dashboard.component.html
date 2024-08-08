@@ -1,0 +1,15 @@
+<div class="header">
+    <h2>Welcome Daniel</h2>
+    <button
+    (click)="addAdmin()"
+    >
+        <mat-icon>add</mat-icon>
+    </button>
+</div>
+<div class="todos-content">
+    @for (todo of todos(); track todo.id) {
+        <app-todos-card
+            [todo]="todo"
+        ></app-todos-card>
+    }
+</div>

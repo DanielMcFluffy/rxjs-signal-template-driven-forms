@@ -1,0 +1,31 @@
+<div>
+    <div class="title">
+        <span>
+            {{todo().title}}
+        </span>
+        <button
+        (click)="showDropdown = !showDropdown"
+        >
+            <mat-icon>more_vert</mat-icon>
+            <div 
+            class="options"
+            [ngStyle]="{'display': showDropdown ? 'block' : 'none'}"
+            >
+                <button>Edit</button>
+                <button>Delete</button>
+            </div>
+        </button>
+    </div>
+    <div class="description">{{todo().description}}</div>
+</div>
+<div class="status">
+    <div class="id">id: {{todo().id}}</div>
+    <div>
+        <label for="completed">Completed</label>
+        <input
+        [ngModel]="todo().completed" 
+        type="checkbox"
+        name="completed"
+        id="completed">
+    </div>
+</div>

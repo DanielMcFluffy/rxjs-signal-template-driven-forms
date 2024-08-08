@@ -1,0 +1,19 @@
+:host {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+    
+    button {
+        background-color: transparent;
+        color: var(--color-disabled);
+        border: none;
+        outline: none;
+        cursor: pointer;
+    }
+}
+
+button.activated {
+    color: #ffffff;
+}
