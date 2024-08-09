@@ -18,14 +18,25 @@
     </div>
     <div class="password">
         <label for="password">Password</label>
-        <input
-            ngModel 
-            #passwordInput="ngModel"
-            placeholder="password123"
-            type="password" 
-            id="password" 
-            name="password" 
-            required>
+        <div class="password-container">
+            <input
+                ngModel 
+                #passwordInput="ngModel"
+                placeholder="password123"
+                [type]="hide() ? 'password' : 'text'"
+                id="password" 
+                name="password" 
+                required>
+                <button
+                mat-icon-button
+                matSuffix
+                (click)="clickEvent($event)"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide()"
+                >
+                    <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+        </div>
             @if (passwordInput.touched && validation()?.error?.format()?.password; as passwordValidation) {
                 <div>
                     {{passwordValidation._errors[0]}}

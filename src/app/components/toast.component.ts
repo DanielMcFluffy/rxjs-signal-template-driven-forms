@@ -12,8 +12,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   styles: `
     :host {
     position: absolute;
-    top: 30%;
-    left: 50%;
+    top: 10%;
+    right: 45%;
     transform: translate(-50%, -50%);
     z-index: 9999;
     border-style: solid;

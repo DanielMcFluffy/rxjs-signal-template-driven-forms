@@ -4,16 +4,21 @@
             {{todo().title}}
         </span>
         <button
-        (click)="showDropdown = !showDropdown"
+        (click)="toggleDropdown($event)"
         >
             <mat-icon>more_vert</mat-icon>
-            <div 
-            class="options"
-            [ngStyle]="{'display': showDropdown ? 'block' : 'none'}"
-            >
-                <button>Edit</button>
-                <button>Delete</button>
-            </div>
+            @if (dropdownOpen()) {
+                <div 
+                class="options"
+                >
+                    <button
+                        (click)="editTodo(todo().id)"
+                    >Edit</button>
+                    <button
+                        (click)="deleteTodo(todo().id)"
+                    >Delete</button>
+                </div>
+            }
         </button>
     </div>
     <div class="description">{{todo().description}}</div>

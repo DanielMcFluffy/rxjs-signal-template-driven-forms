@@ -62,10 +62,36 @@ form {
         }
     }
 }
+.password {
+
+    .password-container {
+        position: relative;
+
+        & + div {
+            color: var(--color-error);
+            font-size: 0.7rem;
+            margin-top: 0.25rem;
+        }
+    }
+
+    input {
+
+        & + button {
+            position: absolute;
+            right: 70px;
+            bottom: 0;
+            background-color: transparent;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
+    }
+}
 
 input + div {
     color: var(--color-error);
     font-size: 0.7rem;
     margin-top: 0.25rem;
 }
+
 

@@ -11,8 +11,10 @@ export const loginFormValidation = z.object({
 });
 
 export const todoFormValidation = z.object({
-    title: z.string({message: 'Title cannot be blank'}),
-    description: z.string({message: 'Description cannot be blank'}).max(120, {message: 'Description must be less than 120 characters'}),
+    title: z.string().refine((val) => val.length > 0, {message: 'Title cannot be blank'}),
+    description: z.string()
+        .min(1, {message: 'Description cannot be blank'})
+        .max(300, {message: 'Description must be less than 300 characters'}),
 })
 
 export type TLoginForm = z.infer<typeof loginFormValidation>;

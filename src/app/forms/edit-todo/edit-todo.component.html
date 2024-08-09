@@ -1,0 +1,53 @@
+<h2 matDialogTitle>Edit Todos</h2>
+<mat-dialog-content>
+    <form
+        #f="ngForm"
+    >
+    <div class="form-detail">
+        <div class="todo-detail">
+            <div>
+                <label for="title">Title</label>
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    placeholder="Title"
+                    [ngModel]="todo.title"
+                    #titleInput="ngModel"
+                    required>
+                    @if (titleInput.touched && validation()?.error?.format()?.title; as titleValidation) {
+                        <div>
+                            {{titleValidation._errors[0]}}
+                        </div>
+                    }
+            </div>
+            <div>
+                <label for="description">Description</label>
+                <textarea
+                    id="description"
+                    name="description"
+                    rows="5"
+                    placeholder="Learn coding"
+                    [ngModel]="todo.description"
+                    #descriptionInput="ngModel"
+                    required></textarea>
+                    @if (descriptionInput.touched && validation()?.error?.format()?.description; as descriptionValidation) {
+                        <div>
+                            {{descriptionValidation._errors[0]}}
+                        </div>
+                    }
+            </div>
+        </div>
+    </div>
+    <div class="form-buttons">
+        <button
+            type="submit"
+            [disabled]="f.invalid"
+            (click)="updateTodo()"
+        >Confirm</button>
+        <button 
+            type="button"
+        >Clear</button>
+    </div>
+    </form>
+</mat-dialog-content>

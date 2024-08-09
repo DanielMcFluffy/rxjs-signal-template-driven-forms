@@ -1,27 +1,107 @@
-# Changedetection
+# RxJS x Signals Todos App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.0.
+## Overview
 
-## Development server
+A small scale implementation of combining RxJS with Signals for forms. 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Get the form value from signal query viewchild
+- Pass the real-time form value into a validator (zod) by converting the signal query into an observable
+- Extract out the validation messages in terms of priority
+- Handle the form value with the signal form
 
-## Code scaffolding
+## Validation Example
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```ts
+import z from 'zod';
 
-## Build
+export const loginFormValidation = z.object({
+    username: z.string({message: 'Username cannot be blank'})
+        .refine((val) => val.length > 3 , {message: 'Username must be between 3 and 20 characters'}),
+    password: z.string({message: 'Password cannot be blank'})
+        .min(6, {message: 'Password must be at least 6 characters long'})
+        .regex(/[A-Z]/, {message: 'Password must contain at least one uppercase letter'})
+        .regex(/[a-z]/, {message: 'Password must contain at least one lowercase letter'})
+        .regex(/[0-9]/, {message: 'Password must contain at least one number'})
+        .regex(/[^A-Za-z0-9]/, {message: 'Password must contain at least one special character'})
+});
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Form Logic Example
 
-## Running unit tests
+```ts
+  form = viewChild.required<NgForm>('f');
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+  validation!: Signal<SafeParseReturnType<TLoginForm, TLoginForm> | undefined>;
+  
+  ngAfterViewInit(): void {
+    this.validation = toSignal(this.form().valueChanges!.pipe(
+      map((val) => loginFormValidation.safeParse(val))
+     ), {injector: this.environmentInjector} )
+  }
+```
 
-## Running end-to-end tests
+## Bringing It Together
+```html 
+        <label for="password">Password</label>
+        <div class="password-container">
+            <input
+                ngModel 
+                #passwordInput="ngModel"
+                placeholder="password123"
+                [type]="hide() ? 'password' : 'text'"
+                id="password" 
+                name="password" 
+                required>
+                <button
+                mat-icon-button
+                matSuffix
+                (click)="clickEvent($event)"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide()"
+                >
+                    <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+        </div>
+            @if (
+                passwordInput.touched && validation()?.error?.format()?.password; as passwordValidation
+                ) {
+                <div>
+                    {{passwordValidation._errors[0]}}
+                </div>
+            }
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```
 
-## Further help
+## Screenshots
+- Example 
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+![Alt Text](./assets/example.png)
+
+- Validation triggers only after user has touched
+
+![Alt Text](./assets/step1.png)
+
+- Validation appear in priorities
+
+![Alt Text](./assets/step2.png)
+
+- Next validation step
+
+![Alt Text](./assets/step3.png)
+
+- Validated
+
+![Alt Text](./assets/step4.png)
+
+
+## Licenses
+
+MIT License
+
+Copyright (c) [2024] [Daniel McFluffy]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

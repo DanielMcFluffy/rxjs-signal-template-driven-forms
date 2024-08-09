@@ -3,6 +3,12 @@
     flex-direction: column;
     height: 100%;
     gap: 1rem;
+    padding: 0.5rem;
+    overflow-y: scroll;
+
+    //remove the scrollbar
+    scrollbar-width: none;
+
 }
 
 .header {

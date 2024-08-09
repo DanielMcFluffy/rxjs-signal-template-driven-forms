@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Todo } from '../models/todo';
+import { ToastService } from './toast.service';
 
 const Todos: Todo[] = [
   { id: 1, title: 'Todo 1',
@@ -23,22 +24,43 @@ const Todos: Todo[] = [
 export class DataService {
 
   constructor() { }
+
+  toastService = inject(ToastService);
   
   getTodos(): Observable<Todo[]> {
     return of<Todo[]>(Todos)
   }
 
+  getTodo(id: number): Observable<Todo | undefined> {
+    return of(Todos.find(todo => todo.id === id));
+  }
+
   addTodo(todo: Todo): void {
     Todos.push(todo);
+    this.toastService.setToast('success', 'Todo added successfully');
+    this.toastService.showToast();
+    setTimeout(() => {
+      this.toastService.hideToast();
+    }, 2000);
   }
 
   updateTodo(id: number, todo: Partial<Todo>) {
     const index = Todos.findIndex(todo => todo.id === id);
     Todos[index] = { ...Todos[index], ...todo };
+    this.toastService.setToast('success', 'Todo updated successfully');
+    this.toastService.showToast();
+    setTimeout(() => {
+      this.toastService.hideToast();
+    }, 2000);
   }
 
   deleteTodo(id: number) {
     const index = Todos.findIndex(todo => todo.id === id);
     Todos.splice(index, 1);
+    this.toastService.setToast('success', 'Todo deleted successfully');
+    this.toastService.showToast();
+    setTimeout(() => {
+      this.toastService.hideToast();
+    }, 2000);
   }
 }

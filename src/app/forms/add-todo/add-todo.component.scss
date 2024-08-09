@@ -1,0 +1,85 @@
+:host {
+    .mat-mdc-dialog-content {
+        max-height: initial;
+    }
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .form-buttons {
+        align-self: flex-end;
+        display: flex;
+        gap: 1rem;
+    }
+}
+
+.form-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.todo-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+
+    div {
+        display: flex;
+        flex-direction: column;
+
+        input, textarea {
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 0.25rem;
+        }
+    }        
+}
+
+.todo-status {
+    align-self: flex-end;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    input {
+        cursor: pointer;
+    }
+}
+
+input + div,
+textarea + div {
+    color: var(--color-error);
+    font-size: 0.7rem;
+    margin-top: 0.25rem;
+}
+
+button {
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    
+    &[type=submit] {
+        outline: none;
+        border-style: none;
+        background-color: var(--primary-color);
+        color: var(--color-font-primary);
+
+        &:hover {
+            background-color: var(--secondary-color);
+        }
+    }
+
+    &[type=button] {
+        background-color: white;
+        border-color: red;
+        color: var(--color-font-secondary);
+
+        &:hover {
+            background-color: var(--color-bg-primary);
+        }
+    }
+}
