@@ -75,7 +75,7 @@ export const loginFormValidation = z.object({
 ## Screenshots
 - Example 
 
-![Alt Text](./assets/example.png)
+![Alt Text](./assets/Example.png)
 
 - Validation triggers only after user has touched
 
